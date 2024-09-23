@@ -1,0 +1,19 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution
+{
+    public static int boringFactorials(int n, int p)
+    {
+        // Write your code here.
+        if (n>=p) return 0;
+        
+            long f=1;
+            for (long i=1;i<=n;i++)
+            {
+                f=(f*i)%p;
+                
+            }
+            return (int)f;
+        
+    }
+}
