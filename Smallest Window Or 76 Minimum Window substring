@@ -78,3 +78,53 @@ Expected Auxiliary Space: O(n), n = len(p)
 Constraints: 
 1 ≤ |s|, |p| ≤ 105
 
+
+
+// more optimized using hash array 
+class Solution {
+    public String minWindow(String s, String t) {
+        int[] hash = new int[256]; // to handle all ASCII characters
+        for (char c : t.toCharArray()) {
+            hash[c]++;
+        }
+        
+        int l = 0, r = 0;
+        int min = Integer.MAX_VALUE;
+        int sin = -1;
+        int c = 0;
+        
+        while (r < s.length()) {
+            // If current character in s is required for t
+            if (hash[s.charAt(r)] > 0) {
+                c++;
+            }
+            // Decrease the count for current character
+            hash[s.charAt(r)]--;
+            
+            // When we have all characters of t in the current window
+            while (c == t.length()) {
+                // Update the minimum window
+                if (r - l + 1 < min) {
+                    min = r - l + 1;
+                    sin = l;
+                }
+                
+                // Start shrinking the window from the left
+                hash[s.charAt(l)]++;
+                if (hash[s.charAt(l)] > 0) {
+                    c--;
+                }
+                l++;
+            }
+            r++;
+        }
+        
+        // If we found a valid window, return it
+        if (sin != -1) {
+            return s.substring(sin, sin + min);
+        }
+        // If no valid window found, return empty string
+        return "";
+    }
+}
+
