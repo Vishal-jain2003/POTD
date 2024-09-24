@@ -1,0 +1,47 @@
+By using DFS we can easily go in deep with every number like we will start from 1 and call its dfs in every call we add number if its less than equal to our n and call its lexicographical greater by calling 
+its next like its next will be 1 next 10 how multiply it by i*10+k and now 1 next - next 11 by adding 1 more so a formulae here 10*i + k 
+
+
+class Solution {
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer>res=new ArrayList<>();
+        // for every number call its dfs to cover all lexicographical 
+        for (int i=1;i<=9;i++)
+        {
+            dfs(i,n,res);
+        }
+        return res;
+    }
+    void dfs(int i,int n,List<Integer>res)
+    {
+        if (i>n)
+        {
+            return;
+        }
+        res.add(i);
+        for (int k=0;k<=9;k++)
+        {
+            int next = 10*i+k;
+            if (next>n) break;
+            dfs(next,n,res);
+        }
+    }
+}Given an integer n, return all the numbers in the range [1, n] sorted in lexicographical order.
+
+You must write an algorithm that runs in O(n) time and uses O(1) extra space. 
+
+ 
+
+Example 1:
+
+Input: n = 13
+Output: [1,10,11,12,13,2,3,4,5,6,7,8,9]
+Example 2:
+
+Input: n = 2
+Output: [1,2]
+ 
+
+Constraints:
+
+1 <= n <= 5 * 104
