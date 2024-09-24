@@ -1,0 +1,80 @@
+https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1
+
+
+Sliding window good question 
+class Solution
+{
+    //Function to find the smallest window in the string s consisting
+    //of all the characters of string p.
+    public static String smallestWindow(String s, String p)
+    {
+        // Your code here
+        HashMap<Character,Integer>hm=new HashMap<>();
+        // HashMap<Character,Integer>hm=new HashMap<>();
+        for (char c:p.toCharArray())
+        {
+            hm.put(c,hm.getOrDefault(c,0)+1);
+        }
+        int l=0;
+        int r=0;
+        int maxlen=Integer.MAX_VALUE;
+        int total=hm.size();
+        int curr=0;
+        String ans="";
+        HashMap<Character,Integer>h=new HashMap<>();
+        while(r<s.length())
+        {
+           char c = s.charAt(r);
+           h.put(c,h.getOrDefault(c,0)+1);
+           if (hm.containsKey(c) && hm.get(c)==h.get(c))
+           {
+               curr++;
+           }
+           
+           while(curr==total)
+           {
+               // shrink window to get min answer
+               if (maxlen>r-l+1)
+               {
+                   maxlen=r-l+1;
+                   ans=s.substring(l,r+1);
+                   
+               }
+               char cc=s.charAt(l);
+               h.put(cc,h.get(cc)-1);
+               if (hm.containsKey(cc) && h.get(cc)<hm.get(cc))
+               {
+                   curr--;
+               }
+               l++;
+               
+           }
+           r++;
+           
+        }
+        return maxlen==Integer.MAX_VALUE ? "-1" : ans;
+        
+    }
+}
+
+
+
+Given two strings s and p. Find the smallest window in the string s consisting of all the characters(including duplicates) of the string p.  Return "-1" in case there is no such window present. In case there are multiple such windows of same length, return the one with the least starting index.
+Note : All characters are in Lowercase alphabets. 
+
+Examples:
+
+Input: s = "timetopractice", p = "toc"
+Output: toprac
+Explanation: "toprac" is the smallest
+substring in which "toc" can be found.
+Input: s = "zoomlazapzo", p = "oza"
+Output: apzo
+Explanation: "apzo" is the smallest 
+substring in which "oza" can be found.
+Expected Time Complexity: O(|s|)
+Expected Auxiliary Space: O(n), n = len(p)
+
+Constraints: 
+1 ≤ |s|, |p| ≤ 105
+
